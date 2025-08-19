@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio Anjara</title>
-  <link rel="shortcut icon" href="images/logo3.jpg" type="image/x-icon">
+  <link rel="shortcut icon" href="images/logo.jpg" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -17,20 +17,57 @@
       --accent:#79c68e;
       --accent-2:#4ea368;
       --ring: rgba(121,198,142,.35);
+      --shadow: rgba(0,0,0,0.35);
+      --active: var(--accent);
     }
     *{box-sizing:border-box;}
-    html,body{margin:0; padding:0; font-family:Inter, sans-serif; color:var(--text); background:radial-gradient(1200px 800px at 10% -10%, #1a2b22 0%, #0f1a13 45%) fixed;}
-    a{text-decoration:none;}
+    html, body {
+      margin:0; 
+      padding:0; 
+      font-family:Inter, sans-serif; 
+      color:var(--text); 
+      background:radial-gradient(1200px 800px at 10% -10%, #1a2b22 0%, #0f1a13 45%) fixed;
+      scroll-behavior: smooth;
+    }
+    a{text-decoration:none; transition: color .3s ease;}
+    a:hover{color:var(--accent);}
 
     /* NAVBAR */
-    .navbar{position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.1) blur(10px); background:rgba(15,26,19,.65); border-bottom:1px solid rgba(255,255,255,.06);}
-    .nav-wrap{max-width:1100px; margin:auto; padding:12px 20px; display:flex; align-items:center; justify-content:space-between;}
-    .brand{display:flex; align-items:center; gap:12px; color:var(--text)}
-    .logo{width:36px; height:36px; display:grid; place-items:center; background:conic-gradient(from 180deg at 50% 50%, #79c68e, #4ea368); border-radius:10px; box-shadow:0 8px 20px rgba(121,198,142,.25);}
+    .navbar{
+      position:sticky; top:0; z-index:50; 
+      backdrop-filter:saturate(1.1) blur(10px); 
+      background:rgba(15,26,19,.85); 
+      border-bottom:1px solid rgba(255,255,255,.06);
+      transition: background .3s ease;
+    }
+    .navbar:hover{background:rgba(15,26,19,0.95);}
+    .nav-wrap{
+      max-width:1100px; 
+      margin:auto; 
+      padding:12px 20px; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+    .brand{display:flex; align-items:center; gap:12px;}
+    .logo{
+      width:40px; height:40px; display:grid; place-items:center;
+      background:conic-gradient(from 180deg at 50% 50%, #79c68e, #4ea368);
+      border-radius:12px; box-shadow:0 8px 24px var(--shadow);
+      transition: transform .3s ease;
+    }
+    .logo:hover{transform:rotate(15deg);}
     .title{font-weight:700; letter-spacing:.3px}
     .menu{display:flex; gap:20px; align-items:center}
-    .menu a{color:var(--text); font-weight:600; padding:8px 12px; border-radius:10px; transition:.2s ease;}
-    .menu a:hover{background:rgba(255,255,255,.06);}
+    .menu a{
+      color:var(--text); font-weight:600; padding:8px 12px; border-radius:10px; 
+      transition:.2s ease, transform .2s ease;
+    }
+    .menu a:hover, .menu a.active{
+      background:rgba(255,255,255,.08); 
+      transform:scale(1.05);
+      color:var(--active);
+    }
 
     /* MOBILE MENU */
     .burger{display:none}
@@ -46,171 +83,225 @@
       .burger:checked ~ .menu-mobile{display:block}
     }
 
-    .menu-mobile{display:none; border-top:1px solid rgba(255,255,255,.08); background:rgba(15,26,19,.9)}
-    .menu-mobile a{display:block; padding:14px 20px; color:var(--text); font-weight:600}
-    .menu-mobile a:hover{background:rgba(255,255,255,.06)}
+    .menu-mobile{display:none; border-top:1px solid rgba(255,255,255,.08); background:rgba(15,26,19,.95)}
+    .menu-mobile a{display:block; padding:14px 20px; color:var(--text); font-weight:600; transition: background .3s ease}
+    .menu-mobile a:hover{background:rgba(121,198,142,.2);}
 
     /* HERO */
-    .hero{max-width:1100px; margin:28px auto 0; padding:32px 20px 14px; display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center}
-    .hero img{width:140px; height:140px; border-radius:50%; object-fit:cover; border:3px solid var(--accent); margin-bottom:16px;}
-    .hero h1{font-size:clamp(28px, 5vw, 48px); margin:0 0 16px;}
-    .hero p{color:var(--muted); margin:0 0 20px; font-size:1.05rem}
-    .cta{display:flex; gap:12px; flex-wrap:wrap}
-    .btn{appearance:none; border:none; padding:12px 16px; border-radius:12px; font-weight:700; cursor:pointer; transition:transform .06s ease, box-shadow .2s ease}
-    .btn:active{transform:translateY(1px)}
-    .btn-primary{background:linear-gradient(180deg, var(--accent), var(--accent-2)); color:#07250f; box-shadow:0 10px 24px rgba(121,198,142,.35)}
-    .btn-ghost{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.18)}
+    .hero{max-width:1100px; margin:28px auto 0; padding:32px 20px 14px; display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center; transition: all .3s ease;}
+    .hero img{width:140px; height:140px; border-radius:50%; object-fit:cover; border:3px solid var(--accent); margin-bottom:16px; transition: transform .3s ease;}
+    .hero img:hover{transform:scale(1.05);}
+    .hero h1{font-size:clamp(28px, 5vw, 48px); margin:0 0 16px; text-align:center;}
+    .hero p{color:var(--muted); margin:0 0 20px; font-size:1.05rem; text-align:center;}
+    .cta{display:flex; gap:12px; flex-wrap:wrap; justify-content:center;}
+    .btn{appearance:none; border:none; padding:12px 16px; border-radius:12px; font-weight:700; cursor:pointer; transition: transform .2s ease, box-shadow .3s ease;}
+    .btn:active{transform:translateY(1px);}
+    .btn-primary{background:linear-gradient(180deg, var(--accent), var(--accent-2)); color:#07250f; box-shadow:0 10px 24px rgba(121,198,142,.35);}
+    .btn-primary:hover{box-shadow:0 14px 30px rgba(121,198,142,.5); transform:translateY(-2px);}
+    .btn-ghost{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.18);}
+    .btn-ghost:hover{background:rgba(121,198,142,.1); transform:translateY(-2px);}
 
-    .hero-card{background:linear-gradient(180deg, rgba(121,198,142,.06), rgba(78,163,104,.08)); border:1px solid rgba(121,198,142,.25); border-radius:18px; padding:20px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.05), 0 20px 50px rgba(0,0,0,.25)}
-    .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-    .hero-item{background:rgba(20,35,25,.75); border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:14px}
-    .pill{display:inline-flex; align-items:center; gap:8px; font-size:.9rem; padding:6px 10px; border-radius:999px; background:rgba(121,198,142,.12); border:1px solid rgba(121,198,142,.35)}
+    .hero-card{background:linear-gradient(180deg, rgba(121,198,142,.06), rgba(78,163,104,.08)); border:1px solid rgba(121,198,142,.25); border-radius:18px; padding:20px; box-shadow:0 20px 40px var(--shadow), inset 0 0 0 1px rgba(255,255,255,.05);}
+    .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+    .hero-item{background:rgba(20,35,25,.75); border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:14px; transition: transform .3s ease, box-shadow .3s ease;}
+    .hero-item:hover{transform:translateY(-4px); box-shadow:0 12px 30px var(--shadow);}
+    .pill{display:inline-flex; align-items:center; gap:8px; font-size:.9rem; padding:6px 10px; border-radius:999px; background:rgba(121,198,142,.12); border:1px solid rgba(121,198,142,.35);}
 
     /* SECTIONS */
-    .section{max-width:1100px; margin:36px auto; padding:0 20px}
-    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
-    .card{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:18px; transition:transform .15s ease, box-shadow .2s ease}
-    .card:hover{transform:translateY(-2px); box-shadow:0 18px 40px rgba(0,0,0,.25)}
-    .card h4{margin:8px 0 6px}
-    .card p{margin:0; color:var(--muted)}
+    .section{max-width:1100px; margin:36px auto; padding:0 20px;}
+    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+    .card{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:18px; transition:transform .3s ease, box-shadow .3s ease;}
+    .card:hover{transform:translateY(-4px); box-shadow:0 18px 40px var(--shadow);}
+    .card h4{text-align:center;}
+    .card p{text-align:justify; color:var(--muted);}
 
-    @media (max-width: 980px){
-      .hero{grid-template-columns:1fr;}
-      .cards{grid-template-columns:1fr 1fr}
-    }
-    @media (max-width: 620px){
-      .cards{grid-template-columns:1fr}
-    }
+    @media (max-width: 980px){.hero{grid-template-columns:1fr;}.cards{grid-template-columns:1fr 1fr;}}
+    @media (max-width: 620px){.cards{grid-template-columns:1fr;}}
 
     /* CONTACT & FOOTER */
     form{display:grid; gap:12px}
-    input, textarea{width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:#0f1a13; color:var(--text)}
-    input:focus, textarea:focus{outline:2px solid var(--ring); border-color:transparent}
+    input, textarea{width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:#0f1a13; color:var(--text); transition:border .3s ease, box-shadow .3s ease;}
+    input:focus, textarea:focus{outline:2px solid var(--ring); border-color:transparent; box-shadow:0 0 8px var(--ring);}
     textarea{min-height:110px}
-    footer{margin-top:42px; padding:24px 20px; background:rgba(0,0,0,.25); border-top:1px solid rgba(255,255,255,.06); text-align:center; color:var(--muted)}
+    footer{margin-top:42px; padding:24px 20px; background:rgba(0,0,0,.25); border-top:1px solid rgba(255,255,255,.06); text-align:center; color:var(--muted); transition: background .3s ease;}
+    footer:hover{background:rgba(0,0,0,.35);}
   </style>
 </head>
 <body>
 
   <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="nav-wrap">
-      <a class="brand" href="#accueil">
-        <!-- <span  aria-hidden="true"></span> -->
-         <img src="images/logo3.jpg" id ="sariko" alt="" srcset="">
-        <span class="title">RAJAONAH Anjara</span>
-      </a>
-      <nav class="menu">
-        <a href="#accueil">Accueil</a>
-        <a href="#projets">Projets</a>
-        <a href="#apropos">À propos</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <label for="burger" class="burger-btn">
-        <span class="burger-lines"></span>
-      </label>
-      <input id="burger" class="burger" type="checkbox" />
-    </div>
-    <nav class="menu-mobile">
-      <a href="#accueil" onclick="document.getElementById('burger').checked=false">Accueil</a>
-      <a href="#projets" onclick="document.getElementById('burger').checked=false">Projets</a>
-      <a href="#apropos" onclick="document.getElementById('burger').checked=false">À propos</a>
-      <a href="#contact" onclick="document.getElementById('burger').checked=false">Contact</a>
+<header class="navbar">
+  <div class="nav-wrap">
+    <a class="brand" href="#accueil">
+      <img src="images/logo.jpg" id="sariko" alt="">
+      <span class="title">RAJAONAH Anjara</span>
+    </a>
+    <nav class="menu">
+      <a href="#accueil"><i class="fa-solid fa-house"></i> Accueil</a>
+      <a href="#projets"><i class="fa-solid fa-diagram-project"></i> Projets</a>
+      <a href="#apropos"><i class="fa-solid fa-user"></i> À propos</a>
+      <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
     </nav>
-  </header>
+    <label for="burger" class="burger-btn">
+      <span class="burger-lines"></span>
+    </label>
+    <input id="burger" class="burger" type="checkbox" />
+  </div>
+  <nav class="menu-mobile">
+    <a href="#accueil" onclick="document.getElementById('burger').checked=false"><i class="fa-solid fa-house"></i> Accueil</a>
+    <a href="#projets" onclick="document.getElementById('burger').checked=false"><i class="fa-solid fa-diagram-project"></i> Projets</a>
+    <a href="#apropos" onclick="document.getElementById('burger').checked=false"><i class="fa-solid fa-user"></i> À propos</a>
+    <a href="#contact" onclick="document.getElementById('burger').checked=false"><i class="fa-solid fa-envelope"></i> Contact</a>
+  </nav>
+</header>
 
-  <!-- HERO -->
-  <section id="accueil" class="hero">
-    <div style="text-align:center;">
-      <img src="images/sary1.png" alt="RAJAONAH Anjara">
-      <center><span class="pill">💻 Développeur Web & Créatif</span></center><br>
-      <h1>Bonjour, je suis RAJAONAH Anjara</h1>
-      <center><p>Je crée des sites modernes et interactifs avec HTML, CSS, JavaScript et Node.js.</p></center>
-      <div class="cta">
+<!-- HERO -->
+<section id="accueil" class="hero">
+  <div style="text-align:center;">
+    <img src="images/sary1.png" alt="RAJAONAH Anjara">
+    <center><span class="pill">💻 Développeur Web & Créatif</span></center><br>
+    <h1>Bonjour, je suis RAJAONAH Anjara Fanomezantsoa</h1>
+    <center><p>Je crée des sites modernes et interactifs avec HTML, CSS, JavaScript et Node.js.</p></center>
+    <div class="cta" style="justify-content:center; flex-wrap:wrap;">
         <a href="#projets" class="btn btn-primary">Voir mes projets</a>
         <a href="#contact" class="btn btn-ghost">Me contacter</a>
-      </div>
     </div>
-    <aside class="hero-card">
-      <center><h2>Compétences clés</h2></center>
-      <div class="hero-grid">
-        <div class="hero-item"><strong>Web Design :</strong><p class="muted">UI/UX moderne et responsive.</p></div>
-        <div class="hero-item"><strong>Développement :</strong><p class="muted">HTML, CSS, JS, Node.js, Express.js.</p></div>
-        <div class="hero-item"><strong>Projets :</strong><p class="muted">Portfolio, applications web et démos interactives.</p></div>
-        <div class="hero-item"><strong>Gestion :</strong><p class="muted">Organisation et planification efficaces.</p></div>
-      </div>
-    </aside>
-  </section>
-
-  <!-- PROJETS -->
-  <section id="projets" class="section">
-    <center><h2>Mes Projets</h2></center>
-    <div class="cards">
-      <article class="card">
-        <center><h4>Application web statique :</h4></center>
-        <p>Application informer concernant le recyclage des feuilles mortes.</p><br>
-        <img src="images/russet.png" alt="" style="width:100%; border-radius:12px;"><br><br>
-       <p>Visiter : <a href="https://russet-transformation-fotsykely.netlify.app/">Russet_Transformation</a></p> 
-      </article>
-      <article class="card">
-        <center><h4>Portfolio :</h4></center>
-        <p>Application interactive avec Node.js et Express.</p><br>
-        <img src="images/portfolio.png" alt="" style="width:100%; border-radius:12px;"><br><br>
-        <p>Visiter : <a href="https://anjara-portfolio.netlify.app/">Portfolio</a></p> 
-      </article>
-      <article class="card">
-        <h4>Jeu en ligne</h4>
-        <p>Petit jeu web en HTML, CSS et JS.</p>
-        <img src="images/projet3.jpg" alt="" style="width:100%; border-radius:12px;">
-      </article>
+  </div>
+  <aside class="hero-card">
+    <center><h2>Mes Compétences :</h2></center>
+    <div class="hero-grid">
+          <center><div class="hero-item"><strong>Web Design :</strong><br><br><p class="muted">UI/UX moderne et responsive avec canvas.</p></div></center>
+          <center><div class="hero-item"><strong>Développement :</strong><br><br><p class="muted">HTML, CSS, JS, Node.js, Express.js, MySQL2.</p></div></center>
+          <center><div class="hero-item"><strong>Projets :</strong><br><br><p class="muted">Portfolio, Applications web statiques et dynamiques.</p></div></center>
+          <center><div class="hero-item"><strong>Gestion :</strong><br><br><p class="muted">Organisation et planification efficaces.</p></div></center>
     </div>
-  </section>
+  </aside>
+</section>
 
-  <!-- À PROPOS -->
-  <section id="apropos" class="section">
-    <center><h2>À propos de moi</h2></center>
-    <div class="cards">
-      <article class="card">
-        <h4>Ma mission</h4>
-        <p>Créer des expériences web modernes et accessibles à tous.</p>
-      </article>
-      <article class="card">
-        <h4>Formation</h4>
-        <p>Développement web, design UI/UX et technologies modernes.</p>
-      </article>
-      <article class="card">
-        <h4>Vision</h4>
-        <p>Allier créativité et technologie pour des projets innovants.</p>
-      </article>
+<!-- PROJETS -->
+<section id="projets" class="section">
+  <center><h2>Mes Projets :</h2></center>
+  <div class="cards">
+    <article class="card">
+      <center><h4>Recyclage des Feuilles Mortes :</h4></center>
+      <p>Cette application a pour objectif de sensibiliser et informer les utilisateurs sur l’importance du recyclage des feuilles mortes</p><br>
+      <p>Visiter : <a href="https://russet-transformation-fotsykely.netlify.app/">Russet_Transformation</a></p><br> 
+      <img src="images/russet.png" alt="" style="width:100%; border-radius:12px;"><br><br>
+    </article>
+    <article class="card">
+      <center><h4> Mon Portfolio :</h4></center>
+      <p>C'est une site vitrine personnelle qui présente mes projets, mes compétences et mon savoir-faire dans plusieurs domaines.</p><br>
+       <p>Visiter : <a href="https://anjara-portfolio.netlify.app/">Portfolio_Anjara</a></p> <br>
+      <img src="images/portfolio.png" alt="" style="width:100%; border-radius:12px;"><br><br>
+    </article>
+    <article class="card">
+      <center><h4>Application Web dynamique :</h4></center>
+      <p>Projet en cours......</p>
+      <img src="images/projet3.jpg" alt="" style="width:100%; border-radius:12px;">
+    </article>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section id="apropos" class="section">
+  <center><h2>À propos de moi :</h2></center>
+  <div class="cards">
+    <article class="card">
+      <center>  <h4>Ma mission :</h4></center><br>
+<p>
+  Créer des expériences web modernes et accessibles à tous. 
+  Mon objectif est de concevoir des solutions numériques à la fois 
+  esthétiques, performantes et intuitives, en mettant l’utilisateur 
+  au centre de chaque projet.
+</p><br>
+<p> 
+  J’aime transformer des idées en 
+  applications concrètes qui apportent une réelle valeur ajoutée, 
+  tout en respectant les bonnes pratiques de développement et 
+  d’accessibilité.
+</p>
+    </article>
+    <article class="card">
+      <center><h4>Formation :</h4></center><br>
+<p>
+  Développement web, design UI/UX et technologies modernes. 
+  J’ai acquis des compétences solides en création de sites et 
+  d’applications dynamiques, en travaillant avec des langages comme 
+  HTML, CSS, JavaScript et Node.js. 
+</p><br>
+<p> 
+  Je m’intéresse également aux 
+  frameworks et outils récents afin de rester à jour avec les tendances 
+  technologiques. Mon parcours m’a permis de développer à la fois une 
+  vision technique et créative, essentielle pour concevoir des projets 
+  innovants et centrés sur l’utilisateur.
+</p>
+
+    </article>
+    <article class="card">
+    <center><h4>Mes études :</h4></center><br>
+<p>
+  J’ai obtenu mon Baccalauréat série D au Lycée Privée Miarasoa (LPM), puis poursuivi mes études 
+  en <strong>Informatique et Électronique</strong> à l' Institut Supérieur Polytéchnique De Madagascar (ISPM).
+  De 2019 à 2023, j’ai validé mon diplôme de <strong>Licence.</strong>
+</p><br>
+<p>Avant de continuer en <strong>Master 1 et Master 2</strong> 
+  de 2023 à 2025 à l’ISPM. Ce parcours m’a permis d’acquérir une solide 
+  maîtrise des bases de l’électronique et des technologies numériques, 
+  tout en me spécialisant dans le développement web et les solutions 
+  innovantes.
+</p>
+    </article>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <center><h2>Contact :</h2></center>
+  <div class="cards" style="grid-template-columns:1.2fr .8fr">
+    <div class="card">
+      <center><h4>Écrivez-moi :</h4></center>
+      <form onsubmit="event.preventDefault(); alert('Message envoyé !');">
+        <label>Nom<input type="text" name="name" required></label>
+        <label>Email<input type="email" name="email" required></label>
+        <label>Message<textarea name="message" required></textarea></label>
+        <button class="btn btn-primary" type="submit">Envoyer</button>
+      </form>
     </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="section">
-    <center><h2>Contact</h2></center>
-    <div class="cards" style="grid-template-columns:1.2fr .8fr">
-      <div class="card">
-        <h4>Écrivez-moi</h4>
-        <form onsubmit="event.preventDefault(); alert('Message envoyé !');">
-          <label>Nom<input type="text" name="name" required></label>
-          <label>Email<input type="email" name="email" required></label>
-          <label>Message<textarea name="message" required></textarea></label>
-          <button class="btn btn-primary" type="submit">Envoyer</button>
-        </form>
+    <div class="card">
+      <div class="info">
+            <h4>Informations :</h4>
+            <p><a href="https://github.com/Rajaonah01" target="_blank" style="color:inherit; text-decoration:none;"><i class="fa-brands fa-github"></i> GitHub </a></p>
+            <p><a href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank" style="color:inherit; text-decoration:none;"><i class="fa-brands fa-facebook"></i> Facebook</a></p>
+            <p><i class="fa-solid fa-phone"></i> +261 38 49 119 16</p>
+            <p><i class="fa-solid fa-envelope"></i> anjararajaonah01@gmail.com</p>
+            <p><i class="fa-solid fa-location-dot"></i> Mahabo Andoharanofotsy, Antananarivo, Madagascar</p>
       </div>
-      <div class="card">
-        <h4>Informations</h4>
-        <p><i class="fa-solid fa-phone"></i> +261 34 42 751 89</p>
-        <p><i class="fa-solid fa-envelope"></i> RAJAONAH@gmail.com</p>
-        <p><i class="fa-solid fa-location-dot"></i> Antananarivo, Madagascar</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2025 RAJAONAH Anjara | Portfolio Web</p>
-  </footer>
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 RAJAONAH Anjara Fanomezantsoa. Tous droits réservés.</p>
+</footer>
+
+<script>
+  // NAVBAR ACTIVE LINK
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.menu a, .menu-mobile a');
+
+  function activateLink() {
+    let len = sections.length;
+    while(--len && window.scrollY + 80 < sections[len].offsetTop) {}
+    navLinks.forEach(lnk => lnk.classList.remove('active'));
+    navLinks.forEach(lnk => {
+      if(lnk.getAttribute('href').substring(1) === sections[len].id){
+        lnk.classList.add('active');
+      }
+    });
+  }
+  activateLink();
+  window.addEventListener('scroll', activateLink);
+</script>
 
 </body>
 </html>
