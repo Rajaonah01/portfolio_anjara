@@ -1,307 +1,1027 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Badoda</title>
-  <link rel="shortcut icon" href="images/logo.jpg" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0f1a13;
-      --card:#142319;
-      --muted:#9fb3a6;
-      --text:#e9f3ed;
-      --accent:#79c68e;
-      --accent-2:#4ea368;
-      --ring: rgba(121,198,142,.35);
-      --shadow: rgba(0,0,0,0.35);
-      --active: var(--accent);
-    }
-    *{box-sizing:border-box;}
-    html, body {
-      margin:0; 
-      padding:0; 
-      font-family:Inter, sans-serif; 
-      color:var(--text); 
-      background:radial-gradient(1200px 800px at 10% -10%, #1a2b22 0%, #0f1a13 45%) fixed;
-      scroll-behavior: smooth;
-    }
-    a{text-decoration:none; transition: color .3s ease;}
-    a:hover{color:var(--accent);}
-
-    /* NAVBAR */
-    .navbar{
-      position:sticky; top:0; z-index:50; 
-      backdrop-filter:saturate(1.1) blur(10px); 
-      background:rgba(15,26,19,.85); 
-      border-bottom:1px solid rgba(255,255,255,.06);
-      transition: background .3s ease;
-    }
-    .navbar:hover{background:rgba(15,26,19,0.95);}
-    .nav-wrap{
-      max-width:1100px; 
-      margin:auto; 
-      padding:12px 20px; 
-      display:flex; 
-      align-items:center; 
-      justify-content:space-between;
-    }
-    .brand{display:flex; align-items:center; gap:12px;}
-    .logo{
-      width:40px; height:40px; display:grid; place-items:center;
-      background:conic-gradient(from 180deg at 50% 50%, #79c68e, #4ea368);
-      border-radius:12px; box-shadow:0 8px 24px var(--shadow);
-      transition: transform .3s ease;
-    }
-    .logo:hover{transform:rotate(15deg);}
-    .title{font-weight:700; letter-spacing:.3px}
-    .menu{display:flex; gap:20px; align-items:center}
-    .menu a{
-      color:var(--text); font-weight:600; padding:8px 12px; border-radius:10px; 
-      transition:.2s ease, transform .2s ease;
-    }
-    .menu a:hover, .menu a.active{
-      background:rgba(255,255,255,.08); 
-      transform:scale(1.05);
-      color:var(--active);
-    }
-
-    /* MOBILE MENU */
-    .burger{display:none}
-    .burger-btn{display:none; width:40px; height:40px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:transparent; cursor:pointer;}
-    .burger-lines{width:20px; height:2px; background:var(--text); position:relative; display:block; margin:auto}
-    .burger-lines::before,.burger-lines::after{content:""; position:absolute; left:0; right:0; height:2px; background:var(--text)}
-    .burger-lines::before{top:-6px}
-    .burger-lines::after{top:6px}
-
-    @media (max-width: 760px){
-      .menu{display:none}
-      .burger-btn{display:inline-grid; place-items:center}
-      .burger:checked ~ .menu-mobile{display:block}
-    }
-
-    .menu-mobile{display:none; border-top:1px solid rgba(255,255,255,.08); background:rgba(15,26,19,.95)}
-    .menu-mobile a{display:block; padding:14px 20px; color:var(--text); font-weight:600; transition: background .3s ease}
-    .menu-mobile a:hover{background:rgba(121,198,142,.2);}
-
-    /* HERO */
-    .hero{max-width:1100px; margin:28px auto 0; padding:32px 20px 14px; display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center; transition: all .3s ease;}
-    .hero img{width:140px; height:140px; border-radius:50%; object-fit:cover; border:3px solid var(--accent); margin-bottom:16px; transition: transform .3s ease;}
-    .hero img:hover{transform:scale(1.05);}
-    .hero h1{font-size:clamp(28px, 5vw, 48px); margin:0 0 16px; text-align:center;}
-    .hero p{color:var(--muted); margin:0 0 20px; font-size:1.05rem; text-align:center;}
-    .cta{display:flex; gap:12px; flex-wrap:wrap; justify-content:center;}
-    .btn{appearance:none; border:none; padding:12px 16px; border-radius:12px; font-weight:700; cursor:pointer; transition: transform .2s ease, box-shadow .3s ease;}
-    .btn:active{transform:translateY(1px);}
-    .btn-primary{background:linear-gradient(180deg, var(--accent), var(--accent-2)); color:#07250f; box-shadow:0 10px 24px rgba(121,198,142,.35);}
-    .btn-primary:hover{box-shadow:0 14px 30px rgba(121,198,142,.5); transform:translateY(-2px);}
-    .btn-ghost{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.18);}
-    .btn-ghost:hover{background:rgba(121,198,142,.1); transform:translateY(-2px);}
-
-    .hero-card{background:linear-gradient(180deg, rgba(121,198,142,.06), rgba(78,163,104,.08)); border:1px solid rgba(121,198,142,.25); border-radius:18px; padding:20px; box-shadow:0 20px 40px var(--shadow), inset 0 0 0 1px rgba(255,255,255,.05);}
-    .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
-    .hero-item{background:rgba(20,35,25,.75); border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:14px; transition: transform .3s ease, box-shadow .3s ease;}
-    .hero-item:hover{transform:translateY(-4px); box-shadow:0 12px 30px var(--shadow);}
-    .pill{display:inline-flex; align-items:center; gap:8px; font-size:.9rem; padding:6px 10px; border-radius:999px; background:rgba(121,198,142,.12); border:1px solid rgba(121,198,142,.35);}
-
-    /* SECTIONS */
-    .section{max-width:1100px; margin:36px auto; padding:0 20px;}
-    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
-    .card{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:18px; transition:transform .3s ease, box-shadow .3s ease;}
-    .card:hover{transform:translateY(-4px); box-shadow:0 18px 40px var(--shadow);}
-    .card h4{text-align:center;}
-    .card p{text-align:justify; color:var(--muted);}
-
-    @media (max-width: 980px){.hero{grid-template-columns:1fr;}.cards{grid-template-columns:1fr 1fr;}}
-    @media (max-width: 620px){.cards{grid-template-columns:1fr;}}
-
-    /* CONTACT & FOOTER */
-    form{display:grid; gap:12px}
-    input, textarea{width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:#0f1a13; color:var(--text); transition:border .3s ease, box-shadow .3s ease;}
-    input:focus, textarea:focus{outline:2px solid var(--ring); border-color:transparent; box-shadow:0 0 8px var(--ring);}
-    textarea{min-height:110px}
-    footer{margin-top:42px; padding:24px 20px; background:rgba(0,0,0,.25); border-top:1px solid rgba(255,255,255,.06); text-align:center; color:var(--muted); transition: background .3s ease;}
-    footer:hover{background:rgba(0,0,0,.35);}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAJAONAH Anjara - Portfolio</title>
+    <link rel="shortcut icon" href="images/logo.jpg" type="image/x-icon">
+    <!-- Bootstrap 5 + icônes -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Font (inter) + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f9fafc;
+            color: #1e1e2f;
+            scroll-behavior: smooth;
+        }
+        :root {
+            --primary: #4a4ae2;
+            --primary-light: #6c6cf0;
+            --secondary: #ff7b5c;
+            --dark-bg: #111827;
+            --card-bg: #ffffff;
+            --soft-gray: #f3f4f6;
+        }
+        /* navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            padding: 1rem 0;
+            transition: all 0.3s;
+        }
+        .navbar .nav-link {
+            font-weight: 500;
+            color: #2d2d44;
+            margin: 0 0.5rem;
+            position: relative;
+            transition: color 0.2s;
+        }
+        .navbar .nav-link:hover,
+        .navbar .nav-link.active {
+            color: var(--primary);
+        }
+        .navbar .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            transition: width 0.25s;
+        }
+        .navbar .nav-link:hover::after,
+        .navbar .nav-link.active::after {
+            width: 70%;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.7rem;
+            background: linear-gradient(145deg, var(--primary), #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        /* hero - tout centré */
+        .hero {
+            min-height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 5rem;
+            background: radial-gradient(circle at 80% 20%, rgba(74, 74, 226, 0.05) 0%, transparent 50%);
+        }
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .hero h1 {
+            font-weight: 700;
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        .name-typewriter {
+            font-weight: 800;
+            font-size: 3.2rem;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(30, end);
+        }
+        .gradient-text {
+            background: linear-gradient(120deg, #4a4ae2, #ff7b5c, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hero-title {
+            font-size: 2rem;
+            color: var(--secondary);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        .hero-description {
+            font-size: 1.3rem;
+            color: #4a4a6a;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.6;
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, var(--primary), #6d28d9);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 8px 18px rgba(74, 74, 226, 0.3);
+            transition: all 0.25s;
+        }
+        .btn-gradient:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 24px rgba(74, 74, 226, 0.4);
+            background: linear-gradient(135deg, #5a5af0, #7c3aed);
+            color: white;
+        }
+        .btn-outline-modern {
+            border: 2px solid rgba(74, 74, 226, 0.3);
+            background: transparent;
+            border-radius: 50px;
+            padding: 0.7rem 2rem;
+            font-weight: 600;
+            color: #2d2d44;
+            transition: 0.2s;
+        }
+        .btn-outline-modern:hover {
+            border-color: var(--primary);
+            background: rgba(74, 74, 226, 0.04);
+            color: var(--primary);
+        }
+        .section-padding {
+            padding: 5rem 0;
+        }
+        .section-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(145deg, #1e1e3f, #38386b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+        }
+        .section-subhead {
+            color: #6b6b8b;
+            font-size: 1.2rem;
+            max-width: 650px;
+            margin: 0 auto 3rem auto;
+            text-align: center;
+        }
+        /* project card */
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: 1.5rem;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.02);
+            height: 100%;
+            backdrop-filter: blur(4px);
+        }
+        .project-card:hover {
+            transform: scale(1.02) translateY(-8px);
+            box-shadow: 0 30px 45px rgba(74, 74, 226, 0.12);
+            border-color: rgba(74, 74, 226, 0.2);
+        }
+        .project-img {
+            background: linear-gradient(145deg, #e0e7ff, #f3e8ff);
+            border-radius: 24px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.8rem;
+            color: #4a4ae2;
+            margin-bottom: 1.5rem;
+            transition: 0.2s;
+            overflow: hidden;
+        }
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0 1.2rem;
+        }
+        .project-tags span {
+            background: #edf2f7;
+            border-radius: 40px;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #3f3f66;
+        }
+        .icon-link {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+        }
+        .icon-link i {
+            font-size: 1.2rem;
+        }
+        .icon-link:hover {
+            gap: 12px;
+            color: var(--secondary);
+        }
+        /* COMPÉTENCES AVEC ANIMATION */
+        .skills-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            perspective: 800px;
+            margin: 2rem 0 1rem;
+        }
+        .skill-item-modern {
+            background: white;
+            border-radius: 60px;
+            padding: 0.9rem 2.2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 1px solid rgba(74, 74, 226, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #2d2d4e;
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+            animation: float-skill 5s infinite ease-in-out;
+            animation-delay: calc(-0.5s * var(--i));
+        }
+        .skill-item-modern i {
+            color: var(--primary);
+            font-size: 1.4rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        @keyframes float-skill {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(0.5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        .skill-item-modern:hover {
+            transform: scale(1.12) translateY(-5px) rotate(1deg);
+            background: linear-gradient(135deg, #ffffff, #f0f3ff);
+            border-color: var(--primary);
+            box-shadow: 0 20px 30px rgba(74, 74, 226, 0.25);
+        }
+        .skill-item-modern:hover i {
+            transform: rotate(360deg) scale(1.1);
+            color: var(--secondary);
+        }
+        .skill-item-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+            pointer-events: none;
+            border-radius: 60px;
+        }
+        .skill-item-modern:hover::before {
+            left: 100%;
+        }
+        .progress-bar-animated {
+            background: linear-gradient(90deg, #4a4ae2, #8b5cf6, #f472b6);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* ABOUT SECTION - Version finale responsif */
+        .about-card {
+            background: white;
+            border-radius: 40px;
+            padding: 3rem;
+            box-shadow: 0 30px 50px -20px rgba(74, 74, 226, 0.2);
+            border: 1px solid rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(74, 74, 226, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .photo-frame {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 20px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 30px rgba(74, 74, 226, 0.3),
+                0 0 0 5px white,
+                0 0 0 8px rgba(74, 74, 226, 0.2);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        .photo-frame:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 30px 40px rgba(74, 74, 226, 0.4),
+                0 0 0 5px white,
+                0 0 0 10px rgba(255, 123, 92, 0.3);
+        }
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+        .photo-frame:hover .profile-photo {
+            transform: scale(1.1);
+        }
+        .photo-badge {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 3;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .deco-1 {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100px;
+            height: 100px;
+            border: 3px solid rgba(255, 123, 92, 0.3);
+            border-radius: 20px;
+            z-index: 1;
+        }
+        .deco-2 {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, rgba(74, 74, 226, 0.1), rgba(255, 123, 92, 0.1));
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .cv-button-container {
+            margin-top: 25px;
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+        .btn-cv {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), #6d28d9);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(74, 74, 226, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+            letter-spacing: 0.5px;
+            animation: pulse-cv 2s infinite ease-in-out;
+        }
+        .btn-cv:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(74, 74, 226, 0.4);
+            background: linear-gradient(135deg, #5a5af0, #7c3aed);
+            color: white;
+        }
+        .btn-cv i {
+            font-size: 1.2rem;
+            transition: transform 0.2s ease;
+        }
+        .btn-cv:hover i {
+            transform: scale(1.1);
+        }
+        @keyframes pulse-cv {
+            0% { box-shadow: 0 10px 20px rgba(74, 74, 226, 0.3); }
+            50% { box-shadow: 0 15px 30px rgba(74, 74, 226, 0.5); }
+            100% { box-shadow: 0 10px 20px rgba(74, 74, 226, 0.3); }
+        }
+        .about-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(74, 74, 226, 0.1), rgba(255, 123, 92, 0.1));
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            border: 1px solid rgba(74, 74, 226, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        .about-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(145deg, #1e1e3f, #38386b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+        .about-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a4a6a;
+            margin-bottom: 25px;
+        }
+        .about-quote {
+            background: linear-gradient(135deg, rgba(74, 74, 226, 0.05), rgba(255, 123, 92, 0.05));
+            padding: 25px 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            position: relative;
+            border-left: 5px solid var(--secondary);
+        }
+        .quote-icon {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 3rem;
+            color: rgba(255, 123, 92, 0.2);
+        }
+        .about-quote p {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #2d2d4a;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+        .timeline {
+            margin: 30px 0 25px;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            margin-top: 5px;
+            position: relative;
+            box-shadow: 0 0 0 4px rgba(74, 74, 226, 0.2);
+            flex-shrink: 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% + 5px);
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            opacity: 0.3;
+        }
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        .timeline-content {
+            flex: 1;
+        }
+        .timeline-date {
+            display: inline-block;
+            background: rgba(74, 74, 226, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .timeline-content h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #1e1e3f;
+        }
+        .timeline-content p {
+            color: #6b6b8b;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        .stats-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed rgba(74, 74, 226, 0.2);
+        }
+        .contact-box {
+            background: linear-gradient(125deg, #ffffff, #fafbff);
+            border-radius: 48px;
+            padding: 3rem;
+            box-shadow: 0 30px 50px -25px rgba(74, 74, 226, 0.2);
+            border: 1px solid #ffffff;
+        }
+        .contact-icon {
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.02);
+            transition: 0.25s;
+            flex-shrink: 0;
+        }
+        .contact-item:hover .contact-icon {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1) rotate(5deg);
+        }
+        .footer {
+            background: #14142b;
+            color: #aaaad4;
+            padding: 2rem 0;
+            border-radius: 48px 48px 0 0;
+            margin-top: 2rem;
+        }
+        .footer a {
+            color: #cfcfff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer a:hover {
+            color: white;
+        }
+        .contact-info a {
+            color: #2d2d44;
+            transition: color 0.2s;
+        }
+        .contact-info a:hover {
+            color: var(--primary);
+        }
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2.5rem;
+        }
+        .social-links a {
+            color: #4a4a6a;
+            font-size: 2rem;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* ===== RESPONSIVITÉ FINALE ===== */
+        @media (max-width: 1200px) {
+            .name-typewriter { font-size: 2.8rem; }
+            .about-title { font-size: 2.5rem; }
+        }
+        @media (max-width: 991px) {
+            .about-card { padding: 2rem; }
+            .photo-frame { width: 260px; height: 260px; }
+            .about-title { 
+                font-size: 2.4rem; 
+                text-align: center !important; 
+            }
+            .about-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .about-badge {
+                margin-left: auto;
+                margin-right: auto;
+                display: table !important;
+            }
+            .timeline-item { gap: 15px; }
+        }
+        @media (max-width: 768px) {
+            .navbar-brand { font-size: 1.4rem; }
+            .name-typewriter { 
+                font-size: 2rem; 
+                white-space: normal;
+                animation: none;
+            }
+            .hero h1 { font-size: 2rem; }
+            .hero-title { font-size: 1.5rem; }
+            .hero-description { font-size: 1.1rem; }
+            .section-title { font-size: 2rem; }
+            .about-card { padding: 1.5rem; border-radius: 30px; }
+            .photo-frame { width: 220px; height: 220px; }
+            .photo-badge {
+                bottom: 10px; right: 10px;
+                padding: 5px 12px;
+                font-size: 0.8rem;
+            }
+            .deco-1 { width: 60px; height: 60px; top: -10px; left: -10px; }
+            .deco-2 { width: 100px; height: 100px; bottom: -10px; right: -10px; }
+            .btn-cv { padding: 10px 22px; font-size: 1rem; }
+            .about-title { font-size: 2rem; }
+            .about-text { font-size: 1rem; text-align: center; }
+            .about-quote { padding: 20px; }
+            .about-quote p { font-size: 1rem; }
+            .quote-icon { font-size: 2.5rem; top: 10px; right: 15px; }
+            .timeline-item {
+                flex-direction: column;
+                gap: 5px;
+                margin-bottom: 20px;
+            }
+            .timeline-dot { margin-left: 0; }
+            .timeline-item::before {
+                left: 7px;
+                top: 20px;
+                height: calc(100% - 10px);
+            }
+            .timeline-content { padding-left: 5px; }
+            .timeline-content h4 { font-size: 1.1rem; }
+            .stats-container {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .contact-box { padding: 2rem; }
+            .contact-item .fs-5 { font-size: 1rem !important; }
+            .footer .d-flex { 
+                flex-direction: column; 
+                gap: 1rem; 
+                text-align: center; 
+            }
+        }
+        @media (max-width: 480px) {
+            .about-card { padding: 1.2rem; }
+            .photo-frame { width: 180px; height: 180px; }
+            .photo-badge {
+                bottom: 5px; right: 5px;
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
+            .btn-cv {
+                padding: 8px 18px;
+                font-size: 0.9rem;
+                width: 100%;
+                max-width: 250px;
+            }
+            .about-title { font-size: 1.8rem; }
+            .about-badge { font-size: 0.9rem; padding: 6px 15px; }
+            .timeline-date { font-size: 0.75rem; }
+            .timeline-content h4 { font-size: 1rem; }
+            .timeline-content p { font-size: 0.85rem; }
+            .contact-icon { width: 45px; height: 45px; font-size: 1.4rem; }
+        }
+        @media (min-width: 1400px) {
+            .photo-frame { width: 320px; height: 320px; }
+            .about-title { font-size: 3rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-<header class="navbar">
-  <div class="nav-wrap">
-    <a class="brand" href="#accueil">
-      <img src="images/logo.jpg" id="sariko" alt="">
-      <span class="title">RAJAONAH Anjara</span>
-    </a>
-    <nav class="menu">
-      <a href="#accueil"><i class="fa-solid fa-house"></i> Accueil</a>
-      <a href="#projets"><i class="fa-solid fa-diagram-project"></i> Projets</a>
-      <a href="#apropos"><i class="fa-solid fa-user"></i> À propos</a>
-      <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
-    </nav>
-    <label for="burger" class="burger-btn">
-      <span class="burger-lines"></span>
-    </label>
-    <input id="burger" class="burger" type="checkbox" />
-  </div>
-  <nav class="menu-mobile">
-    <a href="#accueil" onclick="document.getElementById('burger').checked=false"><i class="fa-solid fa-house"></i> Accueil</a>
-    <a href="#projets" onclick="document.getElementById('burger').checked=false"><i class="fa-solid fa-diagram-project"></i> Projets</a>
-    <a href="#apropos" onclick="document.getElementById('burger').checked=false"><i class="fa-solid fa-user"></i> À propos</a>
-    <a href="#contact" onclick="document.getElementById('burger').checked=false"><i class="fa-solid fa-envelope"></i> Contact</a>
-  </nav>
-</header>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Rajaonah</a>
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link active" href="#home">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="#projets">Projets</a></li>
+                <li class="nav-item"><a class="nav-link" href="#competences">Compétences</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">À propos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                <li class="nav-item ms-lg-3">
+                    <a class="btn btn-gradient btn-sm" href="#contact"><i class="bi bi-chat-dots me-1"></i>Discutons</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <!-- HERO -->
-<section id="accueil" class="hero">
-  <div style="text-align:center;">
-    <img src="images/sary1.png" alt="RAJAONAH Anjara">
-    <center><span class="pill">💻 Développeur Web & Créatif</span></center><br>
-    <h1>Bonjour, je suis RAJAONAH Anjara Fanomezantsoa</h1>
-    <center><p>Je crée des sites modernes et interactifs avec HTML, CSS, JavaScript et Node.js.</p></center>
-    <div class="cta" style="justify-content:center; flex-wrap:wrap;">
-        <a href="#projets" class="btn btn-primary">Voir mes projets</a>
-        <a href="#contact" class="btn btn-ghost">Me contacter</a>
+<section id="home" class="hero">
+    <div class="hero-content">
+        <h1 class="name-typewriter"><span class="gradient-text">RAJAONAH Anjara Fanomezantsoa</span></h1>
+        <div class="hero-title">Développeur Web Frontend & Backend</div>
+        <p class="hero-description">Création d'expériences digitales sur mesure alliant design d'exception et performance technique.</p>
+        <div class="d-flex flex-wrap gap-3 justify-content-center">
+            <a href="#projets" class="btn btn-gradient"><i class="bi bi-grid-3x3-gap-fill me-2"></i>Voir mes projets</a>
+            <a href="#contact" class="btn btn-outline-modern"><i class="bi bi-send me-2"></i>Me contacter</a>
+        </div>
+        <div class="social-links">
+            <a href="https://github.com/Rajaonah01" target="_blank"><i class="bi bi-github"></i></a>
+            <a href="mailto:anjararajaonah01@gmail.com" target="_blank"><i class="bi bi-envelope-fill"></i></a>
+            <a href="https://www.linkedin.com/in/anjara-770796262" target="_blank"><i class="bi bi-linkedin"></i></a>
+        </div>
     </div>
-  </div>
-  <aside class="hero-card">
-    <center><h2>Mes Compétences :</h2></center>
-    <div class="hero-grid">
-          <center><div class="hero-item"><strong>Web Design :</strong><br><br><p class="muted">UI/UX moderne et responsive avec canvas.</p></div></center>
-          <center><div class="hero-item"><strong>Développement :</strong><br><br><p class="muted">HTML, CSS, JS, Node.js, Express.js, MySQL2.</p></div></center>
-          <center><div class="hero-item"><strong>Projets :</strong><br><br><p class="muted">Portfolio, Applications web statiques et dynamiques.</p></div></center>
-          <center><div class="hero-item"><strong>Gestion :</strong><br><br><p class="muted">Organisation et planification efficaces.</p></div></center>
-    </div>
-  </aside>
 </section>
 
 <!-- PROJETS -->
-<section id="projets" class="section">
-  <center><h2>Mes Projets :</h2></center>
-  <div class="cards">
-    <article class="card">
-      <center><h4>Recyclage des Feuilles Mortes :</h4></center>
-      <p>Cette application a pour objectif de sensibiliser et informer les utilisateurs sur l’importance du recyclage des feuilles mortes</p><br>
-      <p>Visiter : <a href="https://russet-transformation-fotsykely.netlify.app/">Russet_Transformation</a></p><br> 
-      <img src="images/russet.png" alt="" style="width:100%; border-radius:12px;"><br><br>
-    </article>
-    <article class="card">
-      <center><h4> Mon Portfolio :</h4></center>
-      <p>C'est une site vitrine personnelle qui présente mes projets, mes compétences et mon savoir-faire dans plusieurs domaines.</p><br>
-       <p>Visiter : <a href="https://anjara-portfolio.netlify.app/">Portfolio_Anjara</a></p> <br>
-      <img src="images/portfolio.png" alt="" style="width:100%; border-radius:12px;"><br><br>
-    </article>
-    <article class="card">
-      <center><h4>Application Web dynamique :</h4></center>
-      <p>Projet en cours......</p>
-      <img src="images/projet3.jpg" alt="" style="width:100%; border-radius:12px;">
-    </article>
-  </div>
+<section id="projets" class="section-padding">
+    <div class="container">
+        <h2 class="section-title">Mes Projets :</h2>
+        <p class="section-subhead">Des réalisations qui reflètent mon savoir-faire.</p>
+        <div class="row g-4">
+            <!-- Projet 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="project-card">
+                    <div class="project-img"><img src="images/russet.png" alt="Russet Transformation" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'bi bi-recycle\'></i>';"></div>
+                    <h4>Recyclage des Feuilles Mortes :</h4>
+                    <p class="text-secondary">Application de sensibilisation au recyclage des feuilles mortes. Interface claire et informative.</p>
+                    <div class="project-tags">
+                        <span>UI/UX</span><span>HTML/CSS</span><span>Netlify</span>
+                    </div>
+                    <a href="https://russet-transformation-fotsykely.netlify.app/" target="_blank" class="icon-link">Visiter <i class="bi bi-box-arrow-up-right"></i></a>
+                </div>
+            </div>
+            <!-- Projet 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="project-card">
+                    <div class="project-img"><img src="images/portfolio.png" alt="Portfolio Anjara" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'bi bi-briefcase\'></i>';"></div>
+                    <h4>Mon Portfolio :</h4><br>
+                    <p class="text-secondary">Site vitrine personnel présentant mes projets, compétences et parcours. Design épuré.</p>
+                    <div class="project-tags">
+                        <span>HTML/CSS</span><span>JavaScript</span>
+                    </div>
+                    <a href="https://anjara-portfolio.netlify.app/" target="_blank" class="icon-link">Visiter <i class="bi bi-box-arrow-up-right"></i></a>
+                </div>
+            </div>
+            <!-- Projet 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="project-card">
+                    <div class="project-img"><img src="images/projet3.jpg" alt="Projet en cours" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'bi bi-gear-wide-connected\'></i>';"></div>
+                    <h4>Application Web dynamique :</h4>
+                    <p class="text-secondary">Projet en cours de développement avec Node.js, Express et MySQL2. Fonctionnalités avancées.</p>
+                    <div class="project-tags">
+                        <span>Node.js</span><span>Express</span><span>MySQL2</span>
+                    </div>
+                    <span class="icon-link text-secondary" style="cursor:default;">(en cours) <i class="bi bi-hourglass-split"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <a href="https://github.com/Rajaonah01" target="_blank" class="btn btn-outline-modern btn-lg"><i class="bi bi-github me-2"></i>Plus sur GitHub</a>
+        </div>
+    </div>
+</section>
+
+<!-- COMPÉTENCES -->
+<section id="competences" class="section-padding" style="background: linear-gradient(145deg, #f9fafe, #f0f3fd);">
+    <div class="container">
+        <h2 class="section-title">Compétences & outils :</h2>
+        <p class="section-subhead">Technologies que j'utilise au quotidien, avec une touche de mouvement.</p>
+        <div class="skills-cloud">
+            <span class="skill-item-modern" style="--i:1"><i class="fa-brands fa-html5"></i> HTML5</span>
+            <span class="skill-item-modern" style="--i:2"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+            <span class="skill-item-modern" style="--i:3"><i class="fa-brands fa-js"></i> JavaScript</span>
+            <span class="skill-item-modern" style="--i:4"><i class="fa-brands fa-node"></i> Node.js</span>
+            <span class="skill-item-modern" style="--i:5"><i class="fa-solid fa-database"></i> MySQL2</span>
+            <span class="skill-item-modern" style="--i:6"><i class="fa-brands fa-figma"></i> Figma</span>
+            <span class="skill-item-modern" style="--i:7"><i class="fa-brands fa-git-alt"></i> Git</span>
+            <span class="skill-item-modern" style="--i:8"><i class="fa-solid fa-paint-brush"></i> Web Design</span>
+            <span class="skill-item-modern" style="--i:9"><i class="fa-regular fa-object-group"></i> Responsive</span>
+            <span class="skill-item-modern" style="--i:10"><i class="fa-regular fa-calendar-check"></i> Planification</span>
+            <span class="skill-item-modern" style="--i:11"><i class="fa-brands fa-bootstrap"></i> Bootstrap</span>
+            <span class="skill-item-modern" style="--i:12"><i class="fa-brands fa-react"></i> React (base)</span>
+        </div>
+        <div class="row mt-5 justify-content-center">
+            <div class="col-md-8">
+                <div class="d-flex justify-content-between"><span>Front-end (HTML/CSS/JS)</span> <span class="text-primary">90%</span></div>
+                <div class="progress mb-4" style="height: 12px; background:#e2e8f0; border-radius: 30px;">
+                    <div class="progress-bar progress-bar-animated" style="width:90%; border-radius: 30px;"></div>
+                </div>
+                <div class="d-flex justify-content-between"><span>Back-end (Node.js/MySQL)</span> <span class="text-primary">75%</span></div>
+                <div class="progress mb-4" style="height: 12px; background:#e2e8f0; border-radius: 30px;">
+                    <div class="progress-bar progress-bar-animated" style="width:75%; border-radius: 30px;"></div>
+                </div>
+                <div class="d-flex justify-content-between"><span>UI/UX Design</span> <span class="text-primary">80%</span></div>
+                <div class="progress mb-4" style="height: 12px; background:#e2e8f0; border-radius: 30px;">
+                    <div class="progress-bar progress-bar-animated" style="width:80%; border-radius: 30px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- À PROPOS -->
-<section id="apropos" class="section">
-  <center><h2>À propos de moi :</h2></center>
-  <div class="cards">
-    <article class="card">
-      <center>  <h4>Ma mission :</h4></center><br>
-<p>
-  Créer des expériences web modernes et accessibles à tous. 
-  Mon objectif est de concevoir des solutions numériques à la fois 
-  esthétiques, performantes et intuitives, en mettant l’utilisateur 
-  au centre de chaque projet.
-</p><br>
-<p> 
-  J’aime transformer des idées en 
-  applications concrètes qui apportent une réelle valeur ajoutée, 
-  tout en respectant les bonnes pratiques de développement et 
-  d’accessibilité.
-</p>
-    </article>
-    <article class="card">
-      <center><h4>Formation :</h4></center><br>
-<p>
-  Développement web, design UI/UX et technologies modernes. 
-  J’ai acquis des compétences solides en création de sites et 
-  d’applications dynamiques, en travaillant avec des langages comme 
-  HTML, CSS, JavaScript et Node.js. 
-</p><br>
-<p> 
-  Je m’intéresse également aux 
-  frameworks et outils récents afin de rester à jour avec les tendances 
-  technologiques. Mon parcours m’a permis de développer à la fois une 
-  vision technique et créative, essentielle pour concevoir des projets 
-  innovants et centrés sur l’utilisateur.
-</p>
-
-    </article>
-    <article class="card">
-    <center><h4>Mes études :</h4></center><br>
-<p>
-  J’ai obtenu mon Baccalauréat série D au Lycée Privée Miarasoa (LPM), puis poursuivi mes études 
-  en <strong>Informatique et Électronique</strong> à l' Institut Supérieur Polytéchnique De Madagascar (ISPM).
-  De 2019 à 2023, j’ai validé mon diplôme de <strong>Licence.</strong>
-</p><br>
-<p>Avant de continuer en <strong>Master 1 et Master 2</strong> 
-  de 2023 à 2025 à l’ISPM. Ce parcours m’a permis d’acquérir une solide 
-  maîtrise des bases de l’électronique et des technologies numériques, 
-  tout en me spécialisant dans le développement web et les solutions 
-  innovantes.
-</p>
-    </article>
-  </div>
+<section id="about" class="section-padding">
+    <div class="container">
+        <div class="about-card">
+            <div class="row align-items-center g-5">
+                <div class="col-md-5 text-center">
+                    <div class="photo-frame">
+                        <img src="images/sary1.png" alt="RAJAONAH Anjara" class="profile-photo">
+                        <div class="photo-badge"><i class="bi bi-camera"></i> 2023</div>
+                        <div class="deco-1"></div>
+                        <div class="deco-2"></div>
+                    </div><br>
+                    <div class="cv-button-container">
+                        <a href="images/Rajaonah_Anjara_CV.pdf" download class="btn-cv">
+                            <i class="bi bi-file-earmark-pdf me-2"></i>Télécharger mon CV
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="text-center text-md-start">
+                        <div class="about-badge d-inline-block">
+                            <i class="bi bi-person-badge me-2"></i>Développeur Backend & Frontend
+                        </div>
+                    </div>
+                    <h2 class="about-title text-center text-md-start">À propos de moi</h2>
+                    <p class="about-text">
+                        Développeur web passionné, je crée des expériences modernes et accessibles, 
+                        avec un soin particulier pour l'utilisateur. Mon approche allie créativité 
+                        et rigueur technique pour donner vie à des projets uniques.
+                    </p>
+                    <div class="about-quote">
+                        <i class="bi bi-quote quote-icon"></i>
+                        <p>Transformer des idées en applications concrètes qui apportent une réelle valeur ajoutée.</p>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">2019 - 2023</span>
+                                <h4>Licence en Informatique & Électronique :</h4>
+                                <p>ISPM - Institut Supérieur Polytechnique de Madagascar</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">2023 - 2025</span>
+                                <h4>Master 1 & 2 en Informatique :</h4>
+                                <p>ISPM - Spécialisation développement web</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">Bacc Série D</span>
+                                <h4>Lycée Privée Miarasoa (LPM) :</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-container">
+                        <!-- Stats vides mais conservées -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="section">
-  <center><h2>Contact :</h2></center>
-  <div class="cards" style="grid-template-columns:1.2fr .8fr">
-    <div class="card">
-      <center><h4>Écrivez-moi :</h4></center>
-      <form onsubmit="event.preventDefault(); alert('Message envoyé !');">
-        <label>Nom<input type="text" name="name" required></label>
-        <label>Email<input type="email" name="email" required></label>
-        <label>Message<textarea name="message" required></textarea></label>
-        <button class="btn btn-primary" type="submit">Envoyer</button>
-      </form>
+<section id="contact" class="section-padding">
+    <div class="container">
+        <div class="contact-box">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                  <center><h2 class="section-title" style="font-size: 2.2rem; text-align: left;">Travaillons ensemble :</h2></center>
+                    <p class="text-secondary mb-4">Une idée, un projet ? Écrivez-moi, je serai ravi d'échanger.</p>
+                    <div class="d-flex flex-column gap-4 contact-info">
+                        <div class="contact-item d-flex align-items-center gap-3">
+                            <div class="contact-icon"><i class="bi bi-envelope-fill"></i></div>
+                            <span class="fs-5">anjararajaonah01@gmail.com</span>
+                        </div>
+                        <div class="contact-item d-flex align-items-center gap-3">
+                            <div class="contact-icon"><i class="bi bi-telephone-fill"></i></div>
+                            <span class="fs-5">+261 38 49 119 16</span>
+                        </div>
+                        <div class="contact-item d-flex align-items-center gap-3">
+                            <div class="contact-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                            <span class="fs-5">Mahabo Andoharanofotsy, Antananarivo, Madagascar</span>
+                        </div>
+                        <div class="d-flex gap-3 mt-2 flex-wrap">
+                            <a href="https://github.com/Rajaonah01" target="_blank" class="btn btn-outline-modern"><i class="bi bi-github me-2"></i>GitHub</a>
+                            <a href="mailto:anjararajaonah01@gmail.com" target="_blank" class="btn btn-outline-modern"><i class="bi bi-envelope me-2"></i>Gmail</a>
+                            <a href="https://www.facebook.com/anjara.kwelyhrajaonarisoa" target="_blank" class="btn btn-outline-modern"><i class="bi bi-facebook"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <form onsubmit="event.preventDefault(); alert('Message envoyé (simulation)');">
+                        <div class="mb-4">
+                            <input type="text" class="form-control form-control-lg bg-white border-0" placeholder="Votre nom" style="border-radius: 60px; box-shadow: 0 8px 18px #e9e9fc;">
+                        </div>
+                        <div class="mb-4">
+                            <input type="email" class="form-control form-control-lg bg-white border-0" placeholder="Votre email" style="border-radius: 60px;">
+                        </div>
+                        <div class="mb-4">
+                            <textarea class="form-control bg-white border-0" rows="4" placeholder="Votre message" style="border-radius: 30px;"></textarea>
+                        </div>
+                        <button class="btn btn-gradient w-100 py-3">Envoyer <i class="bi bi-send ms-2"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card">
-      <div class="info">
-            <h4>Informations :</h4>
-            <p><a href="https://github.com/Rajaonah01" target="_blank" style="color:inherit; text-decoration:none;"><i class="fa-brands fa-github"></i> GitHub </a></p>
-            <p><a href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank" style="color:inherit; text-decoration:none;"><i class="fa-brands fa-facebook"></i> Facebook</a></p>
-            <p><i class="fa-solid fa-phone"></i> +261 38 49 119 16</p>
-            <p><i class="fa-solid fa-envelope"></i> anjararajaonah01@gmail.com</p>
-            <p><i class="fa-solid fa-location-dot"></i> Mahabo Andoharanofotsy, Antananarivo, Madagascar</p>
-      </div>
-    </section>
+</section>
 
 <!-- FOOTER -->
-<footer>
-  <p>&copy; 2025 RAJAONAH Anjara Fanomezantsoa. Tous droits réservés.</p>
+<footer class="footer">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div>© 2023 RAJAONAH Anjara Fanomezantsoa — Tous droits réservés</div>
+            <div class="d-flex gap-4">
+                <a href="https://github.com/Rajaonah01"><i class="bi bi-github me-2"></i>GitHub</a>
+                <a href="https://www.linkedin.com/in/anjara-770796262"><i class="bi bi-linkedin me-2"></i>LinkedIn</a>
+                <a href="https://www.facebook.com/anjara.kwelyhrajaonarisoa"><i class="bi bi-facebook me-2"></i>Facebook</a>
+            </div>
+        </div>
+    </div>
 </footer>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- script navigation active -->
 <script>
-  // NAVBAR ACTIVE LINK
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('.menu a, .menu-mobile a');
-
-  function activateLink() {
-    let len = sections.length;
-    while(--len && window.scrollY + 80 < sections[len].offsetTop) {}
-    navLinks.forEach(lnk => lnk.classList.remove('active'));
-    navLinks.forEach(lnk => {
-      if(lnk.getAttribute('href').substring(1) === sections[len].id){
-        lnk.classList.add('active');
-      }
+    document.addEventListener('DOMContentLoaded', function () {
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+        const sections = document.querySelectorAll('section[id]');
+        
+        window.addEventListener('scroll', function() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
     });
-  }
-  activateLink();
-  window.addEventListener('scroll', activateLink);
 </script>
-
 </body>
 </html>
